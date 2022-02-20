@@ -36,7 +36,9 @@
                   <tr>
                     <th>Nom</th>
                     <th>Email</th>
+                    <th>Roles</th>
                     <th>Photo</th>
+                    <th>Actions</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -45,10 +47,33 @@
                   <tr>
                     <td width="50">{{$user->name}}</td>
                     <td width="350">{{$user->email}}</td>
+                    <td width="350">{{$user->roles}}</td>
                     <td width="150">
-                      <img style="width:150px;"class="img-thumbnail rounded mx-auto d-block" src="/storage/cover_images/{{$user->photo}}">
+                      <img 
+                          style="width:50px; height:50px;"
+                          class="img-thumbnail rounded mx-auto d-block" 
+                          src="/storage/cover_images/{{$user->photo}}">
                     </td>
-
+                    <td width="50">
+                      @if($user->admin)
+                    
+                      {{-- {{ route('users.not.admin', ['id'=>$user->id]) }} --}}
+                      <a title=" Supprimer les autorisations" 
+                        href="{{route('users.not.admin', ['id'=>$user->id])}}" 
+                        class="btn btn-xs btn-danger " 
+                        onclick='return confirm("Voulez-vous vraiment Supprimer ?")'>
+                       
+                        <i class="fas fa-times"></i>
+                      </a>
+                      @else
+                      
+                      {{-- {{ route('users.admin', ['id'=>$user->id]) }} --}}
+                      <a title=" Rendre Admin"  href="{{route('users.admin', ['id'=>$user->id])}}" class="btn btn-xs btn-success" onclick='return confirm("Voulez-vous vraiment Changer ?")'>
+                       
+                        <i class='fas fa-check-square'></i> 
+                      </a>
+                      @endif
+                    </td>
                   </tr>
                     @endforeach
                      
@@ -58,7 +83,9 @@
                     <tr>
                       <th>Nom</th>
                       <th>Email</th>
+                      <th>Roles</th>
                       <th>Photo</th>
+                      <th>Actions</th>
                     </tr>
                   </tfoot>
                 </table>

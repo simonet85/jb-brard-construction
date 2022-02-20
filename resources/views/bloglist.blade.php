@@ -21,6 +21,7 @@
    <div class="blog__container">
       @if (count($posts) > 0)
       @foreach ($posts as $post)
+      {{-- {{dd( $posts )}} --}}
       <div class="blog__card">
               <h2 class="blog__heading">{{$post->title}}</h2>
               
@@ -31,13 +32,13 @@
 
                 </div>
                 <a class="blog__btn text-decoration-none"  href="/singleblog/{{$post->id}}">Lire plus</a>
-                <small class="blog__author">Rédigé le {{$post->created_at}} par {{$post->user->name}}</small>
+                {{-- <small class="blog__author">Rédigé le {{$post->created_at}} par {{$user_name}}</small> --}}
      </div>
 
          @endforeach
          {{-- {{ $posts->links()}} --}}
 
-         <div class="blog__pagination">
+         <div class="mt-4">
             {!! $posts->links() !!}
         </div>
       @else

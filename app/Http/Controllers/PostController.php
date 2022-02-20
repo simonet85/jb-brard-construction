@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 
@@ -18,6 +19,30 @@ class PostController extends Controller
     public function index()
     {
         return view("addpost");
+    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function approuve( $id )
+    {  
+        $post = Post::find( $id );
+        $post->approuve = 1;
+        $posts = Post::simplePaginate(5);
+        $post->save();
+
+        return view("allposts")->with(['success'=> 'Status modifié avec succés', 'posts' => $posts]); 
+    }
+
+    public function unapprouve( $id )
+    {  
+        $post = Post::find( $id );
+        $post->approuve = 0;
+        $posts = Post::simplePaginate(5);
+        $post->save();
+        
+        return view("allposts")->with(['success'=> 'Status modifié avec succés', 'posts' => $posts]); 
     }
 
     // public function allposts()
@@ -35,9 +60,15 @@ class PostController extends Controller
      */
     public function create()
     {
-        $user_id = auth()->user()->id;
-        $user = User::find($user_id);
-        return view('allposts')->with('posts', $user->posts);
+        // $user_id = auth()->user()->id;
+        // $user = User::find($user_id);
+        // return view('allposts')->with('posts', $user->posts);
+        // $posts = DB::table('posts')->where('approuve', 1)->get();
+        // $posts = Post::where('approuve', 1)->orderBy('created_at', 'desc')->get();
+        //  $posts = Post::orderBy('created_at','desc')->simplePaginate(3);
+       
+        $posts = Post::orderBy('created_at','desc')->simplePaginate(3);
+        return view('allposts')->with('posts', $posts);
     }
 
     /**

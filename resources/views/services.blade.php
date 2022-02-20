@@ -25,7 +25,7 @@
 
 <!-- reviews section starts  -->
 
-<section class="reviews">
+{{-- <section class="reviews">
 
    <h1 class="heading"> revues des clients </h1>
 
@@ -139,7 +139,7 @@
 
    </div>
 
-</section>
+</section> --}}
 
 <!-- reviews section ends -->
 

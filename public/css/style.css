@@ -1071,6 +1071,14 @@ img.rounded.mx-auto.d-block.jp_bard_logo.logo_footer {
     .about .row .content h3 {
         font-size: 2.5rem;
     }
+    .blog__card-body {
+        display: flex;
+        flex-direction: column;
+    }
+    .map,
+    .heading {
+        display: none;
+    }
 }
 /*# sourceMappingURL=style.css.map */
 
@@ -1333,9 +1341,9 @@ img.rounded.mx-auto.d-block.jp_bard_logo.logo_footer {
     padding: 5px;
     float: right;
 }
-.blog__pagination {
+.blog__pagination .admin {
     margin-left: 0px;
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
 .page-item.active .page-link {

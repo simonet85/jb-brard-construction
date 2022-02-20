@@ -1,4 +1,3 @@
-
 <div class="contact-info">
 
    <div id="close-contact-info" class="fas fa-times"></div>

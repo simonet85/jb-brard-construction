@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Post;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\ForgotPasswordController;
@@ -24,7 +25,7 @@ Route::get('/index', function () {
     return view('index');
 });
 Route::get('/about', function () {
-    $posts = Post::orderBy('created_at','desc')->simplePaginate(3);
+    $posts = Post::simplePaginate(3);
     return view('about')->with("posts", $posts);
 });
 Route::get('/services', function () {
@@ -38,8 +39,11 @@ Route::get('/contact', function () {
 });
 
 Route::get('/blog', function () {
-    $posts = Post::orderBy('created_at','desc')->simplePaginate(3);
-    return view('bloglist')->with("posts", $posts);
+    // $posts = Post::orderBy('created_at','desc')->simplePaginate(3);
+    // $posts = DB::table('posts')->where('approuve', 1)->orderBy('created_at','desc')->simplePaginate(3);
+    $posts = DB::table('posts')->where('approuve', 1)->simplePaginate(2);
+    // $user_name = auth()->user()->name;
+    return view('bloglist')->with(["posts" => $posts]);
 });
 
 Route::get('/singleblog/{id}', [App\Http\Controllers\PostController::class, 'show'])->name('singleblog');
@@ -70,9 +74,28 @@ Route::delete('/delete/{id}', [App\Http\Controllers\PostController::class, 'dest
 Route::get('/posts/{id}/edit', [App\Http\Controllers\PostController::class, 'edit'])->name('editpost');
 Route::put('/updatepost/{id}', [App\Http\Controllers\PostController::class, 'update'])->name('updatepost');
 
+Route::get('posts/approuve/{id}', 
+    [App\Http\Controllers\PostController::class, 'approuve']
+)->name('posts.approuve');
+
+Route::get('posts/unapprouve/{id}', 
+    [App\Http\Controllers\PostController::class, 'unapprouve']
+)->name('posts.unapprouve');
+
+
 // MESSAGES ROUTES
 Route::get('/messages', [App\Http\Controllers\MessageController::class, 'index'])->name('messages');
 Route::get('/message/{id}/', [App\Http\Controllers\MessageController::class, 'show'])->name('showmessage');
 Route::delete('/delmessage/{id}', [App\Http\Controllers\MessageController::class, 'destroy'])->name('delmessage');
+
+//ADMIN ROUTES
+Route::get('users/admin/{id}', 
+    [App\Http\Controllers\UsersController::class, 'admin']
+)->name('users.admin');
+
+Route::get('users/not-admin/{id}', 
+    [App\Http\Controllers\UsersController::class, 'not_admin']
+)->name('users.not.admin');
+
 
 

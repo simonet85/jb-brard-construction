@@ -46,6 +46,7 @@
             placeholder="Nom" 
             class="box" 
             name="name"  
+            required
          >
 
          <input 
@@ -54,6 +55,7 @@
             value="{{ old('email') }}"
             placeholder="email" 
             class="box" name="email" 
+            required
          >
 
          <input 
@@ -62,6 +64,7 @@
             placeholder="Téléphone" 
             class="box" 
             name="phone" 
+            required
          >
          <textarea 
             placeholder="message" 
@@ -70,6 +73,7 @@
             id="" cols="30" 
             rows="10" 
             name="message" 
+            required
          ></textarea>
 
          <button type="submit" class="btn">Envoyer un message</button>

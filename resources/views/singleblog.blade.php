@@ -42,33 +42,33 @@
 
 <!-- home section starts  -->
 
-{{-- <section class="home" id="home">
+<section class="home" id="home">
 
    <div class="swiper home-slider">
 
       <div class="swiper-wrapper">
 
-         <section class="swiper-slide slide" style="background: url(images/home-slide-1.jpg) no-repeat;">
+         <section class="swiper-slide slide" style="background: url({{url('images/home-slide-1.jpg')}}) no-repeat;">
             <div class="content">
-               <h3>we provide best service</h3>
-               <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aspernatur beatae iusto pariatur laborum magnam eos!</p>
-               <a href="#about" class="btn">Contact us</a>
+               <h3>nous fournissons le meilleur service</h3>
+               <p>Nous avons une équipe de personnes qualifiées avec différentes spécialités d'experts .</p>
+               <a href="{{url('/contact')}}" class="btn">Contactez nous</a>
             </div>
          </section>
 
-         <section class="swiper-slide slide" style="background: url(images/home-slide-2.jpg) no-repeat;">
+         <section class="swiper-slide slide" style="background:  url({{url('images/home-slide-2.jpg')}}) no-repeat;">
             <div class="content">
-               <h3>making dream come to life</h3>
-               <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aspernatur beatae iusto pariatur laborum magnam eos!</p>
-               <a href="#about" class="btn">Contact us</a>
+               <h3>donner vie à un rêve</h3>
+               <p>La variété des tâches qui contribuent à créer un cadre de vie sûr et confortable.</p>
+               <a href="{{url('/contact')}}" class="btn">Contactez nous</a>
             </div>
          </section>
 
-         <section class="swiper-slide slide" style="background: url(images/home-slide-3.jpg) no-repeat;">
+         <section class="swiper-slide slide" style="background: url({{url('images/home-slide-3.jpg')}}) no-repeat;">
             <div class="content">
-               <h3>from concept to creation</h3>
-               <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aspernatur beatae iusto pariatur laborum magnam eos!</p>
-               <a href="#about" class="btn">Contact us</a>
+               <h3>du concept à la création</h3>
+               <p>L'expertise de tous nos constructeurs qualifiés et de nos employés assidus pour offrir l'excellence en termes de services fournis.</p>
+               <a href="{{url('/contact')}}" class="btn">Contactez nous</a>
             </div>
          </section>
 
@@ -79,7 +79,7 @@
 
    </div>
 
-</section> --}}
+</section>
 
 <!-- home section ends -->
 
@@ -108,19 +108,7 @@
 
 <!-- parallax section starts  -->
 
-<section class=" parallax" id="projects">
-
-   <div class="box-container parallax__box">
-      <h1 class="parallax__heading"> Nous bâtissons votre rêve </h1>
-      <p class="parallax__text">
-         Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ex consectetur, itaque quos aliquid sit alias impedit officiis ullam tempore voluptate minus dolorem exercitationem quia animi facilis maiores obcaecati nesciunt. Aliquam.
-      </p>
-      <a href="{{url('/contact')}}" class="parallax__btn text-decoration-none">contactez Nous</a>
-
-   </div>
-
-</section>
-
+@include("partials.parallax")
 <!-- parallax section ends -->
 
 <section class="logo-container">

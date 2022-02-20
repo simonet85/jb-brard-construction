@@ -28,7 +28,7 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">{{__('Tous les articles')}}  </h3>
-                <a class="float-right btn btn-danger" href="{{route('addpost')}}">{{('Ajouter un nouveau message')}}</a>
+                <a data-toggle="tooltip" data-placement="left" title="Ajouter un article" class="float-right btn btn-danger" href="{{route('addpost')}}"><i class="fas fa-plus"></i></a>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -36,6 +36,7 @@
                   <thead>
                   <tr>
                     <th>Titre</th>
+                    
                     <th>Corps</th>
                     <th>Image de couverture</th>
                     <th>Créé le</th>
@@ -43,10 +44,12 @@
                   </tr>
                   </thead>
                   <tbody>
+                   
                   @if (count($posts) > 0)
                     @foreach ($posts as $post)
                   <tr>
                     <td width="10">{{$post->title}}</td>
+                  
                     <td width="350">
                       <p >
                         {!! Str::words($post->body, 10, '...')!!}
@@ -54,22 +57,71 @@
                     </td>
                     <td width="150"><img style="width: 150px;"class="img-thumbnail rounded mx-auto d-block" src="/storage/cover_images/{{$post->cover_image}}"></td>
                     <td width="140">{{$post->created_at}}</td>
+                    @if(!Auth::guest()) 
+                    @if(Auth::user()->id == $post->user_id)
+                    {{-- @if(Auth::user()->admin == 1) --}}
                     <td width="300">
-                      @if(!Auth::guest())
-                      @if(Auth::user()->id == $post->user_id)
                       <div >
 
                         <form action="/delete/{{$post->id}}" method="POST" style='display:inline;'>
                           @csrf
                           @method("DELETE")
-                          <button onclick="return confirm('Are you sure?')" class="btn btn-warning btn-xs btn-flat" type="submit">Supprimer</button>
+                          <button title="Supprimer " onclick="return confirm('Are you sure?')" class="btn btn-warning btn-xs btn-flat" type="submit"><i class="fas fa-trash"></i></button>
                         </form>
 
-                        <a href="/posts/{{$post->id}}/edit" class="btn btn-primary btn-xs btn-flat" onclick="return confirm('Are you sure?')">Mise à jour</a>
+                        <a title="Mise à jour" href="/posts/{{$post->id}}/edit" class="btn btn-primary btn-xs btn-flat" onclick="return confirm('Are you sure?')"><i class="fas fa-eye"></i></a>
+                        @if (Auth::user()->admin == 1)
+                          @if (!$post->approuve == 1)
+                          <a title="Approuve" href="{{route('posts.approuve', ['id'=>$post->id])}}" 
+                            class="btn btn-xs btn-danger" 
+                            onclick='return confirm("Voulez-vous vraiment Approuver ?")'>
+                            <i class='fas fa-check-square'></i> 
+                            
+                          </a> 
+                          @else
+                          <a title="Désapprouve" href="{{route('posts.unapprouve', ['id'=>$post->id])}}" 
+                            class="btn btn-xs btn-danger" 
+                            onclick='return confirm("Voulez-vous vraiment Désapprouver ?")'>
+                          
+                            <i class="fas fa-times"></i>
+                          </a>
+                          @endif
+                        @endif
+
+                       
                       </div>
-                      @endif
-                      @endif
                     </td>
+                    @elseif (Auth::user()->admin == 1)
+                    <td width="300">
+                      <div >
+
+                        <form action="/delete/{{$post->id}}" method="POST" style='display:inline;'>
+                          @csrf
+                          @method("DELETE")
+                          <button title="Supprimer" onclick="return confirm('Are you sure?')" class="btn btn-warning btn-xs btn-flat" type="submit"><i class="fas fa-trash"></i></button>
+                        </form>
+
+                        <a title="Mis à jour" href="/posts/{{$post->id}}/edit" class="btn btn-primary btn-xs btn-flat" onclick="return confirm('Are you sure?')"><i class="fas fa-eye"></i></a>
+
+                        @if (!$post->approuve == 1)
+                        <a title="Désapprouve" href="{{route('posts.approuve', ['id'=>$post->id])}}" 
+                          class="btn btn-xs btn-danger" 
+                          onclick='return confirm("Voulez-vous vraiment Approuver ?")'>
+                          <i class="fas fa-times"></i>
+                        </a> 
+                        @else
+                        <a title="Approuve" href="{{route('posts.unapprouve', ['id'=>$post->id])}}" 
+                          class="btn btn-xs btn-danger" 
+                          onclick='return confirm("Voulez-vous vraiment Désapprouver ?")'>
+                         
+                          <i class='fas fa-check-square'></i> 
+                        </a>
+                        @endif
+
+                      </div>
+                    </td>
+                    @endif 
+                    @endif
                   </tr>
                     @endforeach
                      
@@ -78,6 +130,7 @@
                   <tfoot>
                     <tr>
                       <th>Titre</th>
+                     
                       <th>Corps</th>
                       <th>Image de couverture</th>
                       <th>Créé le</th>
@@ -85,7 +138,9 @@
                     </tr>
                   </tfoot>
                 </table>
-                 {{-- {{ $posts->links()}} --}}
+                <div class="mt-4">
+                  {!! $posts->links() !!}
+                </div>
             
                 @else
                     <p>Aucun articles trouvé.</p>

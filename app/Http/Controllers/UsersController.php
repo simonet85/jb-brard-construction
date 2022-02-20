@@ -4,10 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
 class UsersController extends Controller
 {
+    public function __construct(){
+
+        $this->middleware('admin');
+
+    }
     /**
      * Display a listing of the resource.
      *
@@ -101,5 +107,29 @@ class UsersController extends Controller
         
         $user->delete();
         return redirect('/allusers')->with('success', 'User Removed');
+    }
+
+    public function admin($id)
+    {
+        $user = User::find($id);
+        $user->admin = 1;
+        $user->roles = "admin";
+        $user->save();
+
+        Session::flash('success', 'Successfully Changed User Permission');
+
+        return redirect()->back();
+    }
+
+    public function not_admin($id)
+    {
+        $user = User::find($id);
+        $user->admin = 0;
+        $user->roles = "editeur";
+        $user->save();
+
+        Session::flash('success', 'Successfully Changed User Permission');
+
+        return redirect()->back();
     }
 }

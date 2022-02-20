@@ -2,11 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
+use App\Models\User;
 use App\Models\Message;
 use Illuminate\Http\Request;
 
 class MessageController extends Controller
 {
+    public function __construct(){
+
+        $this->middleware('admin');
+
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,8 +21,13 @@ class MessageController extends Controller
      */
     public function index()
     {
-        $messages =  Message::all();
-        return view("messages")->with("messages", $messages);
+        $user =  User::all();
+        $messages =  Message::simplePaginate(3);
+        return view("messages")->with([
+            "messages" => $messages,
+            "user" => $user,
+            ]
+        );
     }
 
     /**

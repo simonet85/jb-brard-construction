@@ -103,9 +103,7 @@
               <a href="{{route('messages')}}" class="nav-link">
                 <i class="fas fa-envelope-open-text"></i>
                 <p>{{__('Messages')}}</p>
-               
                 
-
               </a>
             </li>
           </li>
